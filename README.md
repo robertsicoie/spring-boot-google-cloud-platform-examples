@@ -119,7 +119,7 @@ Then you need to create a new descriptor file ```src/main/webapp/WEB-INF/appengi
 ```
 
 These are the only changes you need to do to deploy your Spring boot application in Google App Engine. 
-```DatastoreUserDao``` demonstrates how to insert and how to use the  
+```DatastoreUserDao``` demonstrates how to use Google Cloud Datastore.
 
 
 #### Run
@@ -127,7 +127,7 @@ To run locally
 ```
 mvn clean -DskipTests appengine:run
 ```
-It will start the application on port 8080. It will create a local Datastore.
+It will start the application on port 8080. Data will be stored in a local Datastore.
 
 To deploy on GCP
 ```
