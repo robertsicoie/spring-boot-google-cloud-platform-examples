@@ -137,6 +137,7 @@ If you run this sample with the ```DatastoreUserDao``` (default) you must first 
 - ip: String
 - date: Date and time
 - agent: String
+
 For more details on how to create a datastore checkout Google Cloud Datastore [documentation](https://cloud.google.com/datastore/docs/quickstart).
 
 
