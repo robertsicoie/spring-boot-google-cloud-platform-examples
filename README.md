@@ -96,11 +96,17 @@ Exclude JUL to SLF4J Bridge
 
 To use Google Cloud Datastore API update ```pom.xml``` to include the appengine-api-1.0-sdk. You can find the latest available version on [Maven Central](https://mvnrepository.com/artifact/com.google.appengine/appengine-api-1.0-sdk)
 ```
-        <dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.60</version>
-		</dependency>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" ...>
+  ...
+  <dependencies>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>1.9.60</version>
+    </dependency>
+  </dependencies>
+</project>
 ```
 
 Then you need to create a new descriptor file ```src/main/webapp/WEB-INF/appengine-web.xml``` to deploy the application into Google App Engine standard.
