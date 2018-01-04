@@ -1,5 +1,5 @@
 How to deploy Spring Boot web application to Google Cloud Kubernetes Engine
----------------------------------------------------------------------------
+===========================================================================
 
 #### Purpose
 The purpose of this example is to show how to deploy a Spring Boot web application to GCP Kubernetes Engine.
@@ -14,7 +14,7 @@ and then adding a `@GetMapping` endpoint.
 #### Prerequisites setup
 First, you must have a GCP account.
 
-Then install the [Google Cloud SDK] (https://cloud.google.com/sdk/docs/quickstarts) 
+Then install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstarts) 
 
 Next, from your shell or terminal install `kubectl`:
 ```
@@ -34,7 +34,7 @@ Build the docker image:
 docker build -t spring-boot-kubernetes .
 ```
 
-Tag your image, to push it to [Google Cloud Container Registry] (https://cloud.google.com/container-registry/)
+Tag your image, to push it to [Google Cloud Container Registry](https://cloud.google.com/container-registry/)
 The registry name format is `[HOSTNAME]/[PROJECT-ID]/[IMAGE]` where:
  - `[HOSTNAME]` is the gcr.io hostname
  - `[PROJECT-ID]` is your Google Cloud Platform Console project ID
@@ -120,5 +120,10 @@ To remove the image from Container Registry run:
 gcloud container images delete [HOSTNAME]/[PROJECT-ID]/[IMAGE]
 ```
 
+Remove the cluster
+```
+gcloud container clusters delete [CLUSTER-NAME]
+```
+
 #### Credits
-This example is based on the [Kubernetes Engine documentation] (https://cloud.google.com/kubernetes-engine)
+This example is based on the [Kubernetes Engine documentation](https://cloud.google.com/kubernetes-engine)
