@@ -1,4 +1,4 @@
-package ro.robertsicoie.appengine;
+package ro.robertsicoie.kubernetes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
