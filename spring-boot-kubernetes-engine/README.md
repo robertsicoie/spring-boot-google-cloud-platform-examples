@@ -70,7 +70,7 @@ To run an it:
 docker run -p 80:8080 [HOSTNAME]/[PROJECT-ID]/[IMAGE]
 ```
 
-#### Deploy the image
+#### Deploy the image on Kubernetes
 
 Set the default project, by replacing `[PROJECT-ID]` with your project ID.
 ```
@@ -87,7 +87,7 @@ Create the cluster
 gcloud container clusters create [CLUSTER-NAME]
 ```
 
-Authenticate credentials to intereact with the cluster
+Authenticate credentials to interact with the cluster
 ```
 gcloud container clusters get-credentials [CLUSTER-NAME]
 ```
@@ -113,6 +113,36 @@ kubectl get service spring-boot-kubernetes
 Open in browser
 http://[EXTERNAL-IP]:8080
 
+#### Deploy Docker image on Compute Engine
+This section describes how o create a manages instance group to deploy a Docker images, so Kubernetes is not used in this section.
+
+Set the default project, by replacing `[PROJECT-ID]` with your project ID.
+```
+gcloud config set project [PROJECT-ID]
+```
+
+Set default compute zone, by replacing `[COMPUTE-ZONE]` with the desired geographical compute zone, for example `us-west1-a`
+```
+gcloud config set compute/zone [COMPUTE-ZONE]
+```
+
+Create an instance template to run the image on centos-7 machines 
+```
+ gcloud beta compute instance-templates create-with-container spring-boot-docker-with-image --container-image [HOSTNAME]/[PROJECT-ID]/spring-boot-kubernetes --image-family centos-7 --image-project centos-cloud
+```
+
+Create an instance group of two machines
+```
+gcloud compute instance-groups managed create spring-boot-group --base-instance-name spring-boot-vm --size 2 --template spring-boot-docker-with-image
+```
+TODO:
+- update instance group
+- load balancer configuration
+- subnets
+- firewalls
+- integration with GC Deployment Manager
+ 
+
 
 #### Cleanup
 To remove the image from Container Registry run:
@@ -123,6 +153,16 @@ gcloud container images delete [HOSTNAME]/[PROJECT-ID]/[IMAGE]
 Remove the cluster
 ```
 gcloud container clusters delete [CLUSTER-NAME]
+```
+
+Remove the instance group
+```
+gcloud compute instance-groups managed delete spring-boot-group
+```
+
+Remove the instance template
+```
+gcloud compute instance-templates delete spring-boot-docker-with-image
 ```
 
 #### Credits
