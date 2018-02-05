@@ -135,14 +135,8 @@ Create an instance group of two machines
 ```
 gcloud compute instance-groups managed create spring-boot-group --base-instance-name spring-boot-vm --size 2 --template spring-boot-docker-with-image
 ```
-TODO:
-- update instance group
-- load balancer configuration
-- subnets
-- firewalls
-- integration with GC Deployment Manager
- 
 
+Use ```compute-engine-with-containers.sh``` to deploy or undeploy to Compute Engine.  
 
 #### Cleanup
 To remove the image from Container Registry run:

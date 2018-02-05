@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ro.robertsicoie</groupId>
-	<artifactId>spring-boot-kubernetes-engine</artifactId>
+	<artifactId>spring-boot-containerized</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot-kubernetes-engine</name>
+	<name>spring-boot-containerized</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
