@@ -1,0 +1,10 @@
+#
+# Deployment file for App Engine Flexible
+#
+# To deploy the application run
+#
+# $ gcloud app create
+# $ gcloud app deploy
+
+runtime: custom
+env: flex

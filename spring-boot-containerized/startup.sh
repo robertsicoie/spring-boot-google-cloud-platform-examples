@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+#
+# Startup script to run on GCP Compute Engine instance creation.
+#
+
 BUCKET=spring-boot
-JAR=spring-boot-kubernetes-engine-0.0.1-SNAPSHOT.jar
+JAR=spring-boot-containerized-0.0.1-SNAPSHOT.jar
 
 sudo su -
 

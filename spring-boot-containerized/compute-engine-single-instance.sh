@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+#
+# Build jar file, copy it to Cloud Storage and deploy a single Compute Engine instance.
+#
+
 BUCKET=spring-boot
-JAR=spring-boot-kubernetes-engine-0.0.1-SNAPSHOT.jar
+JAR=spring-boot-containerized-0.0.1-SNAPSHOT.jar
 VM=spring-boot
 
 mvn package

@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+#
+# Create or delete instance template, instance-groups, load balancer and firewall rule.
+#
+# See usage.
+
 IMAGE_NAME=spring-boot
 INSTANCE_TEMPLATE_NAME=spring-boot
 BASE_INSTANCE_NAME=spring-boot-vm
@@ -7,7 +12,7 @@ INSTANCE_GROUP_NAME=spring-boot-group
 REGION=europe-west1
 ZONE=europe-west1-b
 
-usage() { echo "Usage: $0 -a <action> -p <project_id> -z <zone>" 1>&2; exit 1; }
+usage() { echo "Usage: $0 -a <create | delete> -p <project_id> -z <zone> " 1>&2; exit 1; }
 
 create_cluster() {
     gcloud config set project $PROJECT_ID
