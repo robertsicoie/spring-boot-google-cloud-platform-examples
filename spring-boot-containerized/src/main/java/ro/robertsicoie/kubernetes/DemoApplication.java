@@ -1,5 +1,7 @@
 package ro.robertsicoie.kubernetes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpRequest;
@@ -15,6 +17,8 @@ import java.util.Date;
 @RestController
 public class DemoApplication {
 
+	private static final Logger LOG = LoggerFactory.getLogger(DemoApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
@@ -24,6 +28,7 @@ public class DemoApplication {
 		StringBuilder response = new StringBuilder();
 		response.append("Time: " + new Date().toString()).append("</br>");
 		response.append("Node: " + InetAddress.getLocalHost()).append("</br>");
+		LOG.info(response.toString());
 		return response.toString();
 	}
 }
