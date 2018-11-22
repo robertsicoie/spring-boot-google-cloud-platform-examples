@@ -5,12 +5,7 @@
 #
 # See usage.
 
-IMAGE_NAME=spring-boot
-INSTANCE_TEMPLATE_NAME=spring-boot
-BASE_INSTANCE_NAME=spring-boot-vm
-INSTANCE_GROUP_NAME=spring-boot-group
-REGION=europe-west1
-ZONE=europe-west1-b
+JAR=spring-boot-containerized-0.0.1-SNAPSHOT.jar
 
 usage() { echo "Usage: $0 -a <create | delete> -p <project_id> -z <zone> " 1>&2; exit 1; }
 
@@ -18,6 +13,10 @@ create_cluster() {
     gcloud config set project $PROJECT_ID
 
     gcloud config set compute/zone $ZONE
+
+    gsutil mb gs://${BUCKET}
+
+    gsutil cp ./target/${JAR} gs://${BUCKET}/${JAR}
 
 #    gcloud beta compute instance-templates create-with-container $INSTANCE_TEMPLATE_NAME \
 #      --container-image gcr.io/$PROJECT_ID/$IMAGE_NAME
@@ -50,7 +49,7 @@ create_cluster() {
         --size 2 \
         --template $INSTANCE_TEMPLATE_NAME
 
-    gcloud beta compute instance-groups managed set-autohealing  $INSTANCE_GROUP_NAME  \
+    gcloud beta compute instance-groups managed set-autohealing set-autoscaling  $INSTANCE_GROUP_NAME  \
         --health-check ${BASE_INSTANCE_NAME}-check \
         --initial-delay 120 \
         --zone $ZONE
@@ -80,13 +79,26 @@ create_cluster() {
 }
 
 delete_cluster() {
+
+    gsutil rm -r gs://${BUCKET}
+
     gcloud config set project $PROJECT_ID
 
     gcloud config set compute/zone $ZONE
 
-    gcloud compute firewall-rules delete ${BASE_INSTANCE_NAME}-www --quiet
+    gcloud compute target-http-proxies delete ${BASE_INSTANCE_NAME}-lb-proxy --quiet
+
+    gcloud compute addresses delete ${BASE_INSTANCE_NAME}-lb-ip-cr --global --quiet
+
+    gcloud compute url-maps delete ${BASE_INSTANCE_NAME}-map --quiet
+
+    gcloud compute backend-services delete ${BASE_INSTANCE_NAME}-backend --global --quiet
 
     gcloud compute health-checks delete http ${BASE_INSTANCE_NAME}-check --quiet
+
+    gcloud compute forwarding-rules delete  ${BASE_INSTANCE_NAME}-http-cr-rule --global --quiet
+
+    gcloud compute firewall-rules delete ${BASE_INSTANCE_NAME}-www --quiet
 
     gcloud compute firewall-rules delete allow-health-check --quiet
 
@@ -94,15 +106,6 @@ delete_cluster() {
 
     gcloud compute instance-templates delete $INSTANCE_TEMPLATE_NAME --quiet
 
-    gcloud compute backend-services delete ${BASE_INSTANCE_NAME}-backend --quiet
-
-    gcloud compute target-http-proxies delete ${BASE_INSTANCE_NAME}-lb-proxy --quiet
-
-    gcloud compute addresses delete ${BASE_INSTANCE_NAME}-lb-ip-cr --global --quiet
-
-    gcloud compute forwarding-rules delete  ${BASE_INSTANCE_NAME}-http-cr-rule --global --quiet
-
-    gcloud compute url-maps delete ${BASE_INSTANCE_NAME}-map --quiet
 
 }
 
@@ -117,6 +120,14 @@ do
         *) usage;;
     esac
 done
+
+IMAGE_NAME=spring-boot
+INSTANCE_TEMPLATE_NAME=spring-boot
+BASE_INSTANCE_NAME=spring-boot-vm
+INSTANCE_GROUP_NAME=spring-boot-group
+REGION=europe-west1
+ZONE=europe-west1-b
+BUCKET=spring-boot-codecamp
 
 if [ "$ACTION" == "create" ]
 then
