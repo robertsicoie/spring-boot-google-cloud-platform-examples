@@ -7,13 +7,47 @@
 # - app.yaml - Specify the configuration for the application.
 # - Dockerfile - Defines the set of instructions to create the Docker image.
 
-mvn package
+usage() { echo "Usage: $0 -a <create | delete> -p <project_id> " 1>&2; exit 1; }
 
-gcloud app create
+create() {
+    mvn clean package
 
-gcloud app deploy
+    gcloud config set project $PROJECT_ID
 
-gcloud app browse
+    gcloud app create --region $REGION --quiet
+
+    gcloud app deploy --quiet
+
+    gcloud app browse --quiet
+}
+
+delete() {
+    # TODO add cleanup steps.
+    echo "Do it manually!!!"
+    exit 1
+}
 
 
-# TODO add cleanup steps.
+
+while getopts a:p:z: option
+do
+    case "${option}"
+    in
+        a) ACTION=${OPTARG};;
+        p) PROJECT_ID=${OPTARG};;
+        *) usage;;
+    esac
+done
+
+REGION=europe-west2
+ZONE=europe-west2-b
+
+if [ "$ACTION" == "create" ]
+then
+    create;
+elif [ "$ACTION" == "delete" ]
+then
+    delete;
+else
+    echo "Unknown action";
+fi

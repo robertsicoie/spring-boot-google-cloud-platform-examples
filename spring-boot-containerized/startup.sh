@@ -4,7 +4,7 @@
 # Startup script to run on GCP Compute Engine instance creation.
 #
 
-BUCKET=spring-boot-codecamp
+BUCKET=spring-boot-http
 JAR=spring-boot-containerized-0.0.1-SNAPSHOT.jar
 
 sudo su -

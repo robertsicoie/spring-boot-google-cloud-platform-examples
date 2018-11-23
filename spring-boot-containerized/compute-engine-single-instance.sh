@@ -7,11 +7,15 @@
 create_instance() {
     mvn clean package
 
+    echo -e "\n\n"
+
     gsutil mb gs://${BUCKET}
+
+    echo -e "\n\n"
+
     gsutil cp ./target/${JAR} gs://${BUCKET}/${JAR}
 
     gcloud compute firewall-rules create ${VM}-http --allow tcp:80 --target-tags ${VM}
-
 
     gcloud compute instances create ${VM} \
       --tags ${VM} \
@@ -21,8 +25,8 @@ create_instance() {
 
 delete_instance() {
     gsutil rm -r gs://${BUCKET}
-    gcloud compute firewall-rules delete ${VM}-http
-    gcloud compute instances delete ${VM} --zone $ZONE
+    gcloud compute firewall-rules delete ${VM}-http  --quiet
+    gcloud compute instances delete ${VM} --zone $ZONE  --quiet
 }
 
 while getopts a:p:z: option
@@ -38,7 +42,7 @@ done
 
 REGION=europe-west2
 ZONE=europe-west2-b
-BUCKET=spring-boot-single-node
+BUCKET=spring-boot-http
 JAR=spring-boot-containerized-0.0.1-SNAPSHOT.jar
 VM=spring-boot-single-node
 

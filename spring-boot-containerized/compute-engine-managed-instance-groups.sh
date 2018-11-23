@@ -127,7 +127,7 @@ BASE_INSTANCE_NAME=spring-boot-vm
 INSTANCE_GROUP_NAME=spring-boot-group
 REGION=europe-west1
 ZONE=europe-west1-b
-BUCKET=spring-boot-managed-instances
+BUCKET=spring-boot-http
 
 if [ "$ACTION" == "create" ]
 then
