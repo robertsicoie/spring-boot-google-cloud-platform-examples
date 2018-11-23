@@ -49,7 +49,7 @@ create_cluster() {
         --size 2 \
         --template $INSTANCE_TEMPLATE_NAME
 
-    gcloud beta compute instance-groups managed set-autohealing set-autoscaling  $INSTANCE_GROUP_NAME  \
+    gcloud beta compute instance-groups managed set-autohealing $INSTANCE_GROUP_NAME  \
         --health-check ${BASE_INSTANCE_NAME}-check \
         --initial-delay 120 \
         --zone $ZONE
@@ -127,7 +127,7 @@ BASE_INSTANCE_NAME=spring-boot-vm
 INSTANCE_GROUP_NAME=spring-boot-group
 REGION=europe-west1
 ZONE=europe-west1-b
-BUCKET=spring-boot-codecamp
+BUCKET=spring-boot-managed-instances
 
 if [ "$ACTION" == "create" ]
 then
