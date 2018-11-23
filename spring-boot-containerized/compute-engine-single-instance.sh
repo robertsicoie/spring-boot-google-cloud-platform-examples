@@ -5,7 +5,7 @@
 #
 
 create_instance() {
-    mvn package
+    mvn clean package
 
     gsutil mb gs://${BUCKET}
     gsutil cp ./target/${JAR} gs://${BUCKET}/${JAR}
