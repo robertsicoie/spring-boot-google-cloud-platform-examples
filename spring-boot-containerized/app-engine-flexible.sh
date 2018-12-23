@@ -22,9 +22,7 @@ create() {
 }
 
 delete() {
-    # TODO add cleanup steps.
-    echo "Do it manually!!!"
-    exit 1
+    gcloud app services delete example --quiet
 }
 
 
