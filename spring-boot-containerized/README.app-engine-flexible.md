@@ -18,6 +18,17 @@ Then install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart
 
 #### Deploy scripts
 
-Use ```app-engine-flexible.sh``` to deploy or undeploy to Compute Engine.
+Use ```app-engine-flexible.sh``` to deploy the application to App Engine Flexible Environment.
 
+```
+$ ./app-engine-flexible.sh -a create -p YOUR-PROJECT-ID
+
+```
+ 
 #### Cleanup
+```
+$ ./app-engine-flexible.sh -a delete -p YOUR-PROJECT-ID
+
+```
+
+

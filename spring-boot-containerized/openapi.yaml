@@ -1,0 +1,19 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Example API"
+host: "YOUR-PROJECT-ID.appspot.com"
+basePath: "/api"
+schemes:
+- "http"
+paths:
+  /home:
+    get:
+      operationId: "root"
+      description: "Returns node hostname and date/time."
+      responses:
+        "200":
+          description: "Node and date/time."
+          schema:
+            type: "string"
