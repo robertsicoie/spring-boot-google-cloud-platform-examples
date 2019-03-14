@@ -47,6 +47,19 @@ Authenticate credentials to interact with the cluster
 gcloud container clusters get-credentials [CLUSTER-NAME]
 ```
 
+Create the docker image
+```bash
+docker build -t gcr.io/[PROJECT]/[IMAGE]:[VERSION] .
+```
+Authenticate to container registry
+```bash
+gcloud auth configure-docker
+```
+Upload the image
+```bash
+docker push gcr.io/[PROJECT]/[IMAGE]:[VERSION]
+```
+
 Run the application in the cluster
 ```
 kubectl run spring-boot-containerized --image=[HOSTNAME]/[PROJECT-ID]/[IMAGE]:[VERSION] --port 8080
@@ -57,7 +70,7 @@ kubectl run spring-boot-containerized --image=gcr.io/my-project/spring-boot-cont
 ```
 Create a Kubernetes Service to expose the application to external traffic.
 ```
-kubectl expose deployment service spring-boot-containerized --type="LoadBalancer" --port=80
+kubectl expose deployment service spring-boot-containerized --type="LoadBalancer" --port=80 --target-port=8080
 ```
 
 Inspect the service by running
@@ -66,12 +79,18 @@ kubectl get service spring-boot-containerized
 ```
 
 Open in browser
-http://[EXTERNAL-IP]:8080
+http://[EXTERNAL-IP]
+
+#### Scale
+Scale from one to 3 replicas of the sprint-boot-containerized deployment. This will create 3 pods.
+```bash
+kubectl scale --replicas=3 deployment/spring-boot-containerized
+```
 
 #### Cleanup
 To remove the image from Container Registry run:
 ```
-gcloud container images delete [HOSTNAME]/[PROJECT-ID]/[IMAGE]
+gcloud container images delete gcr.io/[PROJECT-ID]/[IMAGE]
 ```
 
 Remove the cluster
@@ -81,12 +100,12 @@ gcloud container clusters delete [CLUSTER-NAME]
 
 Remove the instance group
 ```
-gcloud compute instance-groups managed delete spring-boot-group
+gcloud compute instance-groups managed delete [INSTANCE-GROUP]
 ```
 
 Remove the instance template
 ```
-gcloud compute instance-templates delete spring-boot-docker-with-image
+gcloud compute instance-templates delete [INSTANCE-GROUP-TEMPLATE]
 ```
 
 #### Credits
